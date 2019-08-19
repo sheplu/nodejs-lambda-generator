@@ -1,1 +1,1 @@
-# nodejs-lambda-generator
+# nodejs-serverless-generator
