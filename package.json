@@ -3,24 +3,29 @@
   "version": "0.0.1",
   "description": "A CLI to bootstrap nodejs serverless projects",
   "main": "src/index.js",
-  "bin": "bin/nodeless",
+  "bin": {
+    "nodeless": "bin/nodejs-serverless-generator"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "cli",
-    "create-project"
+    "nodeless",
+    "serverless",
+    "generator",
+    "nodejs-serverless-generator"
   ],
   "author": "Jean Burellier <> (https://)",
   "license": "MIT",
   "dependencies": {
-    "arg": "^4.1.0",
+    "arg": "^4.1.1",
     "chalk": "^2.4.2",
     "covgen": "^3.1.0",
     "esm": "^3.2.18",
     "execa": "^1.0.0",
     "gitignore": "^0.6.0",
-    "inquirer": "^6.2.2",
+    "inquirer": "^6.5.1",
     "listr": "^0.14.3",
     "ncp": "^2.0.0",
     "pkg-install": "^0.2.0",
