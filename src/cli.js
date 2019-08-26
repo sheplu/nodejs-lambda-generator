@@ -50,12 +50,18 @@ function configAccess(file) {
 }
 
 async function promptForOptions(options) {
-  console.log(options)
   const questions = [];
   questions.push({
     type: 'input',
     name: 'name',
     message: 'Please choose the name of your project',
+  });
+
+  questions.push({
+    type: 'confirm',
+    name: 'folder',
+    message: 'Should a folder be created?',
+    default: false,
   });
 
   questions.push({
@@ -67,7 +73,6 @@ async function promptForOptions(options) {
   });
 
   const answers = await inquirer.prompt(questions);
-  console.log(answers)
   return answers;
 }
 
@@ -80,6 +85,7 @@ export async function cli(args, config = 'config.json') {
   if(mode["--create"]) {
     console.log('create')
     const options = await promptForOptions();
+    console.log(options)
     await createProject(conf.create, options);
   }
   else if(mode["--verify"]){
