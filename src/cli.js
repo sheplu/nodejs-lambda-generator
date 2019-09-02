@@ -1,24 +1,15 @@
-// function overloadConfig
-// function parseArgIntoOptions
-// function askMissingOptions
-//
-
 import * as fs from 'fs';
 
 import arg from 'arg';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 
-import defaultConfig from './config';
 import { createProject } from './create';
 import { verifyProject } from './verify';
 
-const cliLink = new URL(import.meta.url).pathname;
-
 async function readConfig(link) {
   const rawdata = fs.readFileSync(link);
-  const student = JSON.parse(rawdata);
-  return student;
+  return JSON.parse(rawdata);
 }
 
 function parseArgs(rawArgs) {
@@ -68,7 +59,7 @@ async function promptForOptions(options) {
     type: 'list',
     name: 'template',
     message: 'Please choose which project template to use',
-    choices: ['amazon', 'google', 'microsoft', 'scalway'],
+    choices: ['amazon', 'google', 'microsoft', 'scaleway', 'custom'],
     default: 'amazon',
   });
 
@@ -77,28 +68,20 @@ async function promptForOptions(options) {
 }
 
 export async function cli(args, config = 'config.json') {
-  console.log('hello world');
   const configLink = configAccess(config);
   const conf = await readConfig(configLink);
   const mode = parseArgs(args);
 
   if(mode["--create"]) {
-    console.log('create')
     const options = await promptForOptions();
-    console.log(options)
     await createProject(conf.create, options);
   }
   else if(mode["--verify"]){
-    console.log('verify')
     await verifyProject(conf.verify);
   }
   else {
     console.log('%s Unknow mode', chalk.red.bold('Error'));
     process.exit(1)
   }
-  // overload config
-  // parseArg
-  // askMissing
-  // createProject
 };
 

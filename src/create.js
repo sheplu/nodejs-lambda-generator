@@ -12,7 +12,7 @@ const access = promisify(fs.access);
 const copy = promisify(ncp);
 
 async function copyTemplateFiles(templateDir, options) {
-  const folder = `/${options.name}`
+  const folder = options.folder === true ? `/${options.name}` : ''
   return copy(templateDir, `${process.cwd()}${folder}`, {
     clobber: false,
   });
@@ -36,14 +36,12 @@ export async function createProject(conf, options) {
     }
 
     let folderPath;
-    if(options.folder) {
-      folderPath = `${process.cwd()}${options.name}`;
+    if(options.folder === true) {
+      folderPath = `${process.cwd()}/${options.name}`;
     }
     else {
       folderPath = process.cwd();
     }
-
-    console.log(folderPath)
 
     const createFolder = {
       title: 'Creating folder',
@@ -57,7 +55,7 @@ export async function createProject(conf, options) {
 
     const installDeps = {
       title: 'Install dependencies',
-      task: () => projectInstall({ cwd: folderPath, }),
+      task: () => projectInstall({ cwd: folderPath, })
     };
 
     const tasks = new Listr(
@@ -67,7 +65,7 @@ export async function createProject(conf, options) {
       }
     );
 
-    if (options.folder) {
+    if (options.folder === true) {
       tasks.add(createFolder);
     }
     tasks.add(copyFiles);
